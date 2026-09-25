@@ -18,7 +18,7 @@ def test_create_booking():
     response = requests.post(url, json=payload)
 
     # Verify status code
-    assert response.status_code == 200
+    assert response.status_code == 201
 
     # Verify response body
     data = response.json()
