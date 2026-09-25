@@ -26,8 +26,10 @@ def test_create_booking():
     # 201 Created is the correct response for a new booking
     assert response.status_code == 201
 
-    # Verify response body contains the correct data
+    # Verify response body — the API returns data directly, not nested under "booking"
     data = response.json()
-    assert data["booking"]["firstname"] == "Frantisek"
-    assert data["booking"]["lastname"] == "Tester"
-    assert data["booking"]["roomid"] == 1
+    assert data["firstname"] == "Frantisek"
+    assert data["lastname"] == "Tester"
+    assert data["roomid"] == 1
+    assert data["bookingdates"]["checkin"] == checkin
+    assert data["bookingdates"]["checkout"] == checkout
