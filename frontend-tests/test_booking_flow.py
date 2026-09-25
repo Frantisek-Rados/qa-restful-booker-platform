@@ -8,8 +8,13 @@ def test_homepage_loads():
         page = browser.new_page()
         page.goto("https://automationintesting.online")
 
-        # Verify the page title / heading
-        assert "Shady Meadows" in page.content()
+        # Wait for the page to render (Next.js loads content via JavaScript)
+        page.wait_for_load_state("networkidle")
+
+        # Verify the page contains the expected heading
+        heading = page.locator("h1").first
+        heading.wait_for(state="visible", timeout=10000)
+        assert "Shady Meadows" in heading.inner_text()
 
         browser.close()
 
@@ -21,10 +26,14 @@ def test_navigation_to_booking():
         page = browser.new_page()
         page.goto("https://automationintesting.online")
 
+        # Wait for the page to render
+        page.wait_for_load_state("networkidle")
+
         # Click the "Book Now" button
         page.click("text=Book Now")
 
-        # Verify the booking form is visible
-        assert page.is_visible("text=Check Availability")
+        # Wait for the booking form to appear
+        booking_heading = page.locator("text=Check Availability").first
+        booking_heading.wait_for(state="visible", timeout=10000)
 
         browser.close()
