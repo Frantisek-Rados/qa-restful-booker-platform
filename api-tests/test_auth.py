@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "https://automationintesting.online"
+BASE_URL = "https://automationintesting.online/api"
 
 
 def test_login_valid_credentials():
